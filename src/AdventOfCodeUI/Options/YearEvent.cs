@@ -34,8 +34,8 @@ namespace AdventOfCodeUI.Options
 
     public class Day
     {
-        public bool Part1Completed;
-        public bool Part2Completed;
+        private bool Part1Completed;
+        private bool Part2Completed;
 
         public bool IsPart1Complete
         {
@@ -46,16 +46,38 @@ namespace AdventOfCodeUI.Options
         {
             get { return Part2Completed; }
         }
+
+        public void SetPart1True()
+        {
+            Part1Completed = true;
+        }
+
+        public void SetPart2True()
+        {
+            Part2Completed = true;
+        }
+
+        public void SetPart1False()
+        {
+            Part1Completed = false;
+        }
+
+        public void SetPart2False()
+        {
+            Part2Completed = false;
+        }
     }
 
     public class Year2022 : Year
     {
         public Year2022()
         {
-            for (int i = 0; i < 18; i++)
+            var daysCompleted = 18;
+
+            for (int i = 0; i < daysCompleted; i++)
             {
-                Days[i].Part1Completed = true;
-                Days[i].Part2Completed = true;
+                Days[i].SetPart1True();
+                Days[i].SetPart2True();
             }
         }
     }

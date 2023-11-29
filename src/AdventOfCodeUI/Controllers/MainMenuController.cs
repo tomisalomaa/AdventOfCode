@@ -16,7 +16,7 @@ namespace AdventOfCodeUI.Controllers
             _yearEvent = new();
         }
 
-        public void printMenuOptions()
+        public string GetMainMenuChoice(string input = null)
         {
             string userChoice = null;
             int optionIndex = 1;
@@ -36,22 +36,37 @@ namespace AdventOfCodeUI.Controllers
             while (!IsUserChoiceValid(userChoice))
             {
                 Console.Write("Choose: ");
-                userChoice = RemoveWhitespace(Console.ReadLine());
+                userChoice = (
+                    string.IsNullOrWhiteSpace(input) 
+                    ? ReadMainMenuOptionInput()
+                    : ReadMainMenuOptionInput(input));
             }
+
+            return userChoice.ToLower();
         }
 
-        public bool IsUserChoiceValid(string input)
+        private bool IsUserChoiceValid(string input)
         {
             HashSet<string> validInputs = _menuInputs.ValidInputs;
 
             return validInputs.Contains(input?.ToLower());
         }
 
-        public string RemoveWhitespace(string input)
+        private string RemoveWhitespace(string input)
         {
             return (string.IsNullOrWhiteSpace(input)
                 ? input
                 : _stringWhitespace.Replace(input, ""));
+        }
+
+        private string ReadMainMenuOptionInput()
+        {
+            return RemoveWhitespace(Console.ReadLine());
+        }
+
+        private string ReadMainMenuOptionInput(string input)
+        {
+            return RemoveWhitespace(input);
         }
     }
 }

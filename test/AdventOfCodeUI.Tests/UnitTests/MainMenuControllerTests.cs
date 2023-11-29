@@ -1,5 +1,6 @@
 using AdventOfCodeUI.Controllers;
 using AdventOfCodeUI.Models;
+using Moq;
 
 namespace AdventOfCodeUI.Tests.UnitTests
 {
@@ -16,13 +17,13 @@ namespace AdventOfCodeUI.Tests.UnitTests
         }
 
         [Test]
-        public void IsUserChoiceValid_ValidInputs_ReturnTrue()
+        public void GetMainMenuChoice_ValidInputs_ReturnInputString()
         {
             var inputs = _menuInputs.ValidInputs;
 
             foreach (var input in inputs)
             {
-                Assert.That(_sut.IsUserChoiceValid(input), Is.True);
+                Assert.That(_sut.GetMainMenuChoice(input), Is.EqualTo(input));
             }
         }
 
@@ -31,20 +32,17 @@ namespace AdventOfCodeUI.Tests.UnitTests
         [TestCase("exiT")]
         [TestCase("exIt")]
         [TestCase("eXit")]
-        public void IsUserChoiceValid_ValidInputInUpper_ReturnTrue(string input)
+        public void GetMainMenuChoice_ValidInputInUpper_ReturnInputStringInLower(string input)
         {
-            Assert.That(_sut.IsUserChoiceValid(input), Is.True);
+            Assert.That(_sut.GetMainMenuChoice(input), Is.EqualTo(input.ToLower()));
         }
 
-        [TestCase(" hello", ExpectedResult = "hello")]
-        [TestCase("hello ", ExpectedResult = "hello")]
-        [TestCase(" h e l l o ", ExpectedResult = "hello")]
-        [TestCase(null, ExpectedResult = null)]
-        [TestCase("   ", ExpectedResult = "   ")]
-        [TestCase("", ExpectedResult = "")]
-        public string RemoveWhitespace_InputContainsWhitespace_ReturnInputWithoutWhitespaces(string input)
+        [TestCase(" 2022", ExpectedResult = "2022")]
+        [TestCase("2023 ", ExpectedResult = "2023")]
+        [TestCase(" e x i t ", ExpectedResult = "exit")]
+        public string GetMainMenuChoice_ValidInputContainsWhitespace_ReturnInputWithoutWhitespaces(string input)
         {
-            return _sut.RemoveWhitespace(input);
+            return _sut.GetMainMenuChoice(input);
         }
     }
 }

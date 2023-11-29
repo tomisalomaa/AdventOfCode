@@ -8,7 +8,7 @@ namespace AdventOfCodeUI
         {
             MainMenuController mainMenu = new();
 
-            mainMenu.printMenuOptions();
+            var chooseYear = mainMenu.GetMainMenuChoice();
         }
     }
 }
