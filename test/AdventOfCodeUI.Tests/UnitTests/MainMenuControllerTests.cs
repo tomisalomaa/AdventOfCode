@@ -1,6 +1,5 @@
 using AdventOfCodeUI.Controllers;
 using AdventOfCodeUI.Models;
-using Moq;
 
 namespace AdventOfCodeUI.Tests.UnitTests
 {
