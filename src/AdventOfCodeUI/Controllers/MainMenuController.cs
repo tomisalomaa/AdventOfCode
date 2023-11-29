@@ -1,4 +1,5 @@
 ﻿using AdventOfCodeUI.Models;
+using AdventOfCodeUI.Options;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCodeUI.Controllers
@@ -6,22 +7,30 @@ namespace AdventOfCodeUI.Controllers
     public class MainMenuController
     {
         private readonly MenuInputsModel _menuInputs;
+        private readonly YearEvent _yearEvent;
         private static readonly Regex _stringWhitespace = new(@"\s+");
 
         public MainMenuController()
         {
             _menuInputs = new();
+            _yearEvent = new();
         }
 
         public void printMenuOptions()
         {
             string userChoice = null;
+            int optionIndex = 1;
 
             Console.WriteLine("ADVENT OF CODE");
             Console.Write(new string('*', 20));
             Console.WriteLine("\nChoose a year\n");
-            Console.WriteLine("1) 2022");
-            Console.WriteLine("2) 2023");
+
+            foreach (var year in _yearEvent.YearEvents.Keys)
+            {
+                Console.WriteLine($"{optionIndex}) {year}");
+                optionIndex++;
+            }
+            
             Console.WriteLine("x) Exit\n");
 
             while (!IsUserChoiceValid(userChoice))
@@ -33,15 +42,7 @@ namespace AdventOfCodeUI.Controllers
 
         public bool IsUserChoiceValid(string input)
         {
-            HashSet<string> validInputs = new HashSet<string>
-            {
-                "1",
-                "2",
-                "2022",
-                "2023",
-                "x",
-                "exit"
-            };
+            HashSet<string> validInputs = _menuInputs.ValidInputs;
 
             return validInputs.Contains(input?.ToLower());
         }
